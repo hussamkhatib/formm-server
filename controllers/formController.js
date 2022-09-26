@@ -20,6 +20,23 @@ exports.createForm = catchAysncErrors(async (req, res, next) => {
   });
 });
 
+// update a form =>  /forms/:id
+exports.updateForm = catchAysncErrors(async (req, res, next) => {
+  const now = new Date();
+  const { formId } = req.params;
+  const result = await firestore
+    .collection(`/users/${userUid}/forms`)
+    .doc(formId)
+    .update({
+      updatedAt: now,
+      ...req.body,
+    });
+
+  res.status(200).json({
+    id: formId,
+  });
+});
+
 // get a form =>  /forms/:formId
 exports.getForm = catchAysncErrors(async (req, res, next) => {
   const { formId } = req.params;

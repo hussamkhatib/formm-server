@@ -6,6 +6,7 @@ const userUid = "Lr3G9Q5EGHUaIiSTXyDfhLpxxd23";
 // get user forms =>  /me/forms
 exports.getUserForms = catchAysncErrors(async (req, res, next) => {
   // @NOTE: verify if new Date() is safe in server side
+
   let result = [];
   await firestore
     .collection(`/users/${userUid}/forms`)

@@ -27,18 +27,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/setcookie", (req, res) => {
-  res.cookie(`Cookie12`, `encrypted cookie string Value`, {
-    maxAge: 5000,
-    // expires works the same as the maxAge
-    expires: new Date("01 12 2021"),
-    secure: true,
-    httpOnly: true,
-    sameSite: "lax",
-  });
-  res.send("Cookie have been saved successfully");
-});
-
 const auth = require("./routes/auth");
 const form = require("./routes/form");
 const user = require("./routes/user");
