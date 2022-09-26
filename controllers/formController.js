@@ -37,6 +37,13 @@ exports.updateForm = catchAysncErrors(async (req, res, next) => {
   });
 });
 
+// delete a form =>  /forms/:id
+exports.deleteForm = catchAysncErrors(async (req, res, next) => {
+  const { formId } = req.params;
+  await firestore.collection(`/users/${userUid}/forms`).doc(formId).delete();
+  res.status(204).end();
+});
+
 // get a form =>  /forms/:formId
 exports.getForm = catchAysncErrors(async (req, res, next) => {
   const { formId } = req.params;
