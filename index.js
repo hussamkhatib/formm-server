@@ -5,12 +5,11 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
+const ErrorHandler = require("./utils/errorHandler");
 
 dotenv.config({ path: ".env" });
 
 const app = express();
-
-const port = process.env.PORT;
 
 app.use(
   cors({
@@ -35,9 +34,25 @@ app.use("/api", auth);
 app.use("/api", form);
 app.use("/api", user);
 
+// Handle unhandled routes
+app.all("*", (req, res, next) => {
+  next(new ErrorHandler(`${req.originalUrl} route not found`, 404));
+});
+
 // Middleware to handle errors
 app.use(errorMiddleware);
 
-app.listen(port, () => {
-  console.log(`Server started on http://localhost:${port}`);
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+  console.log(`Server started on http://localhost:${PORT}`);
+});
+
+// Handling Unhandled Promise Rejection
+process.on("unhandledRejection", (err) => {
+  console.log(`Error: ${err.message}`);
+  console.log("Shutting down the server due to Unhandled promise rejection.");
+  server.close(() => {
+    process.exit(1);
+  });
 });
