@@ -13,8 +13,7 @@ const app = express();
 
 app.use(
   cors({
-    // @TODO: handle for prod later
-    origin: ["http://localhost:3001", "http://localhost:5173"],
+    origin: ["https://formm-web.vercel.app", "http://localhost:5173"],
     credentials: true,
   })
 );
